@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">configurator_option_form.option_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Option Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="ItechPanel\Configurator\Block\Adminhtml\Option\Edit\BackButton"/>
+            <button name="delete" class="ItechPanel\Configurator\Block\Adminhtml\Option\Edit\DeleteButton"/>
+            <button name="save" class="ItechPanel\Configurator\Block\Adminhtml\Option\Edit\SaveButton"/>
+            <button name="save_and_continue" class="ItechPanel\Configurator\Block\Adminhtml\Option\Edit\SaveAndContinueButton"/>
+        </buttons>
+        <namespace>configurator_option_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>configurator_option_form.option_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="option_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="configurator/option/save"/>
+        </settings>
+        <dataProvider class="ItechPanel\Configurator\Model\ResourceModel\Option\DataProvider" name="option_form_data_source">
+            <settings>
+                <requestFieldName>option_id</requestFieldName>
+                <primaryFieldName>option_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label translate="true">General Information</label>
+        </settings>
+        <field name="option_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">option</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>option_id</dataScope>
+            </settings>
+        </field>
+        <field name="title" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">option</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <dataScope>title</dataScope>
+            </settings>
+        </field>
+        <field name="label" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">option</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Label</label>
+                <dataScope>label</dataScope>
+            </settings>
+        </field>
+        <field name="position" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">option</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Position</label>
+                <dataScope>position</dataScope>
+            </settings>
+        </field>
+        <field name="type" sortOrder="40" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">option</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Type</label>
+                <dataScope>type</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="ItechPanel\Configurator\Model\Config\Source\OptionType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="subsection_id" sortOrder="45" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">option</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Select Parent Subsection</label>
+                <dataScope>subsection_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="ItechPanel\Configurator\Model\Source\Subsection"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="is_active" sortOrder="50" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">option</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable Option</label>
+                <dataScope>is_active</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="assign_products">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Select Products</label>
+        </settings>
+        <container name="assign_products_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">160</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <block name="option_products" class="ItechPanel\Configurator\Block\Adminhtml\Option\AssignProducts"/>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

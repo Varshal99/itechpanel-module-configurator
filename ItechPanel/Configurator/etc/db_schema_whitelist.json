@@ -1,0 +1,283 @@
+{
+    "itechpanel_configurator_section": {
+        "column": {
+            "section_id": true,
+            "title": true,
+            "label": true,
+            "position": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_SECTION_TITLE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "itechpanel_configurator_subsection": {
+        "column": {
+            "subsection_id": true,
+            "title": true,
+            "label": true,
+            "price": true,
+            "is_required": true,
+            "position": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_SUBSECTION_TITLE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "itechpanel_configurator_option": {
+        "column": {
+            "option_id": true,
+            "title": true,
+            "label": true,
+            "position": true,
+            "type": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_OPTION_TITLE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "itechpanel_configurator_option_child": {
+        "column": {
+            "child_id": true,
+            "title": true,
+            "label": true,
+            "tooltip": true,
+            "price": true,
+            "position": true,
+            "thumbnail": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_OPTION_CHILD_TITLE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "itechpanel_configurator_option_group": {
+        "column": {
+            "group_id": true,
+            "title": true,
+            "label": true,
+            "position": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_OPTION_GROUP_TITLE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "itechpanel_configurator_image": {
+        "column": {
+            "image_id": true,
+            "title": true,
+            "upload_image": true,
+            "top_image": true,
+            "bottom_image": true,
+            "left_image": true,
+            "right_image": true,
+            "front_image": true,
+            "back_image": true,
+            "is_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_IMAGE_TITLE": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "itechpanel_configurator_section_subsection": {
+        "column": {
+            "section_id": true,
+            "subsection_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_SECTION_SUBSECTION_SUBSECTION_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_SECTION_SUBSECTION_SECTION_ID": true,
+            "FK_SECTION_SUBSECTION_SUBSECTION_ID": true
+        }
+    },
+    "itechpanel_configurator_subsection_option": {
+        "column": {
+            "subsection_id": true,
+            "option_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_SUBSECTION_OPTION_OPTION_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_SUBSECTION_OPTION_SUBSECTION_ID": true,
+            "FK_SUBSECTION_OPTION_OPTION_ID": true
+        }
+    },
+    "itechpanel_configurator_option_child_option": {
+        "column": {
+            "child_id": true,
+            "option_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_OPTION_CHILD_OPTION_OPTION_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_OPTION_CHILD_OPTION_CHILD_ID": true,
+            "FK_OPTION_CHILD_OPTION_OPTION_ID": true
+        }
+    },
+    "itechpanel_configurator_option_child_group": {
+        "column": {
+            "child_id": true,
+            "group_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_OPTION_CHILD_GROUP_GROUP_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_OPTION_CHILD_GROUP_CHILD_ID": true,
+            "FK_OPTION_CHILD_GROUP_GROUP_ID": true
+        }
+    },
+    "itechpanel_configurator_image_child": {
+        "column": {
+            "image_id": true,
+            "child_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_IMAGE_CHILD_CHILD_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_IMAGE_CHILD_IMAGE_ID": true,
+            "FK_IMAGE_CHILD_CHILD_ID": true
+        }
+    },
+    "itechpanel_configurator_section_product": {
+        "column": {
+            "section_id": true,
+            "product_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_SECTION_PRODUCT_PRODUCT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_SECTION_PRODUCT_SECTION_ID": true,
+            "FK_SECTION_PRODUCT_PRODUCT_ID": true
+        }
+    },
+    "itechpanel_configurator_subsection_product": {
+        "column": {
+            "subsection_id": true,
+            "product_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_SUBSECTION_PRODUCT_PRODUCT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_SUBSECTION_PRODUCT_SUBSECTION_ID": true,
+            "FK_SUBSECTION_PRODUCT_PRODUCT_ID": true
+        }
+    },
+    "itechpanel_configurator_option_product": {
+        "column": {
+            "option_id": true,
+            "product_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_OPTION_PRODUCT_PRODUCT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_OPTION_PRODUCT_OPTION_ID": true,
+            "FK_OPTION_PRODUCT_PRODUCT_ID": true
+        }
+    },
+    "itechpanel_configurator_option_child_product": {
+        "column": {
+            "child_id": true,
+            "product_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_OPTION_CHILD_PRODUCT_PRODUCT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_OPTION_CHILD_PRODUCT_CHILD_ID": true,
+            "FK_OPTION_CHILD_PRODUCT_PRODUCT_ID": true
+        }
+    },
+    "itechpanel_configurator_option_group_product": {
+        "column": {
+            "group_id": true,
+            "product_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_OPTION_GROUP_PRODUCT_PRODUCT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_OPTION_GROUP_PRODUCT_GROUP_ID": true,
+            "FK_OPTION_GROUP_PRODUCT_PRODUCT_ID": true
+        }
+    },
+    "itechpanel_configurator_image_product": {
+        "column": {
+            "image_id": true,
+            "product_id": true
+        },
+        "index": {
+            "ITECHPANEL_CONFIGURATOR_IMAGE_PRODUCT_PRODUCT_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_IMAGE_PRODUCT_IMAGE_ID": true,
+            "FK_IMAGE_PRODUCT_PRODUCT_ID": true
+        }
+    },
+    "itechpanel_configurator_product": {
+        "column": {
+            "entity_id": true,
+            "product_id": true,
+            "is_configurator_enabled": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_CONFIGURATOR_PRODUCT_PRODUCT_ID": true,
+            "ITECHPANEL_CONFIGURATOR_PRODUCT_PRODUCT_ID": true
+        }
+    }
+}

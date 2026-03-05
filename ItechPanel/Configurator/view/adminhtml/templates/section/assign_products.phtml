@@ -1,0 +1,71 @@
+<?php
+/** @var \ItechPanel\Configurator\Block\Adminhtml\Section\AssignProducts $block */
+?>
+<div class="admin__field-control">
+    <?= $block->getGridHtml() ?>
+    
+    <input type="hidden" name="section_products" id="in_section_products" data-form-part="configurator_section_form" value="<?= $block->escapeHtmlAttr($block->getProductsJson()) ?>" />
+</div>
+
+<script>
+    require([
+        'jquery',
+        'mage/adminhtml/grid'
+    ], function ($) {
+        'use strict';
+
+        $(document).ready(function() {
+            // Load initial selected products from PHP
+            var selectedProducts = <?= /* @noEscape */ $block->getProductsJson() ?>;
+            var $hiddenInput = $('#in_section_products');
+            
+            // Ensure input starts with correct value
+            $hiddenInput.val(JSON.stringify(selectedProducts));
+
+            // Bulletproof jQuery Event Delegation for checkboxes (works even after AJAX reloads)
+            $('#section_product_grid').on('change', 'input[type="checkbox"]', function() {
+                var $checkbox = $(this);
+                var val = $checkbox.val();
+
+                // Handle "Select All" checkbox
+                if (val === 'on' || val === '' || isNaN(val)) {
+                    var isChecked = $checkbox.is(':checked');
+                    $('#section_product_grid tbody input[type="checkbox"]').each(function() {
+                        var id = $(this).val();
+                        if (id && id !== 'on' && !isNaN(id)) {
+                            if (isChecked) {
+                                selectedProducts[id] = '0';
+                            } else {
+                                delete selectedProducts[id];
+                            }
+                        }
+                    });
+                } else {
+                    // Handle individual checkbox
+                    if ($checkbox.is(':checked')) {
+                        selectedProducts[val] = '0';
+                    } else {
+                        delete selectedProducts[val];
+                    }
+                }
+
+                // Update hidden input and trigger change for UI Component
+                $hiddenInput.val(JSON.stringify(selectedProducts)).trigger('change');
+                
+                // Update Magento's AJAX reload params so pagination keeps them checked
+                if (window.section_product_gridJsObject) {
+                    window.section_product_gridJsObject.reloadParams = window.section_product_gridJsObject.reloadParams || {};
+                    window.section_product_gridJsObject.reloadParams['section_products'] = JSON.stringify(selectedProducts);
+                }
+            });
+
+            // Fallback interval to ensure pagination retains state if grid loads late
+            setInterval(function() {
+                if (window.section_product_gridJsObject) {
+                    window.section_product_gridJsObject.reloadParams = window.section_product_gridJsObject.reloadParams || {};
+                    window.section_product_gridJsObject.reloadParams['section_products'] = JSON.stringify(selectedProducts);
+                }
+            }, 500);
+        });
+    });
+</script>

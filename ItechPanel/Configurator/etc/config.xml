@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <system>
+            <media_storage_configuration>
+                <allowed_resources>
+                    <itechpanel_configurator>itechpanel/configurator</itechpanel_configurator>
+                </allowed_resources>
+            </media_storage_configuration>
+        </system>
+
+        <itechpanel_configurator>
+            <general>
+                <enabled>1</enabled>
+                <display_on_product_page>1</display_on_product_page>
+                <show_price_breakdown>1</show_price_breakdown>
+                <require_selection_validation>1</require_selection_validation>
+            </general>
+            <images>
+                <max_file_size>2097152</max_file_size>
+                <allowed_extensions>jpg,jpeg,png,gif,webp</allowed_extensions>
+                <image_quality>85</image_quality>
+            </images>
+        </itechpanel_configurator>
+    </default>
+</config>

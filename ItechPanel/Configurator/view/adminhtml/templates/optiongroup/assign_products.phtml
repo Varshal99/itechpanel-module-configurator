@@ -1,0 +1,48 @@
+<?php
+/** @var \ItechPanel\Configurator\Block\Adminhtml\OptionGroup\AssignProducts $block */
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+?>
+<div class="admin__field-control">
+    <?= $block->getGridHtml() ?>
+    <input type="hidden" name="optiongroup_products" id="in_optiongroup_products" data-form-part="configurator_optiongroup_form" value="" />
+</div>
+<script>
+    require(['jquery', 'mage/adminhtml/grid'], function ($) {
+        'use strict';
+        $(document).ready(function() {
+            var selectedProducts = <?= /* @noEscape */ $block->getProductsJson() ?>;
+            var $hiddenInput = $('#in_optiongroup_products');
+            $hiddenInput.val(JSON.stringify(selectedProducts));
+
+            $('#optiongroup_product_grid').on('change', 'input[type="checkbox"]', function() {
+                var $checkbox = $(this);
+                var val = $checkbox.val();
+                if (val === 'on' || val === '' || isNaN(val)) {
+                    var isChecked = $checkbox.is(':checked');
+                    $('#optiongroup_product_grid tbody input[type="checkbox"]').each(function() {
+                        var id = $(this).val();
+                        if (id && id !== 'on' && !isNaN(id)) {
+                            if (isChecked) selectedProducts[id] = '0';
+                            else delete selectedProducts[id];
+                        }
+                    });
+                } else {
+                    if ($checkbox.is(':checked')) selectedProducts[val] = '0';
+                    else delete selectedProducts[val];
+                }
+                $hiddenInput.val(JSON.stringify(selectedProducts)).trigger('change');
+                if (window.<?= /* @noEscape */ $gridJsObjectName ?>) {
+                    window.<?= /* @noEscape */ $gridJsObjectName ?>.reloadParams = window.<?= /* @noEscape */ $gridJsObjectName ?>.reloadParams || {};
+                    window.<?= /* @noEscape */ $gridJsObjectName ?>.reloadParams['optiongroup_products'] = JSON.stringify(selectedProducts);
+                }
+            });
+            setInterval(function() {
+                if (window.<?= /* @noEscape */ $gridJsObjectName ?>) {
+                    window.<?= /* @noEscape */ $gridJsObjectName ?>.reloadParams = window.<?= /* @noEscape */ $gridJsObjectName ?>.reloadParams || {};
+                    window.<?= /* @noEscape */ $gridJsObjectName ?>.reloadParams['optiongroup_products'] = JSON.stringify(selectedProducts);
+                }
+            }, 500);
+        });
+    });
+</script>

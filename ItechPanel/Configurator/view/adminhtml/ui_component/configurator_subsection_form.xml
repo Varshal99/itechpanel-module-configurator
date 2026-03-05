@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">configurator_subsection_form.subsection_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Subsection Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="ItechPanel\Configurator\Block\Adminhtml\Subsection\Edit\BackButton"/>
+            <button name="delete" class="ItechPanel\Configurator\Block\Adminhtml\Subsection\Edit\DeleteButton"/>
+            <button name="save" class="ItechPanel\Configurator\Block\Adminhtml\Subsection\Edit\SaveButton"/>
+            <button name="save_and_continue" class="ItechPanel\Configurator\Block\Adminhtml\Subsection\Edit\SaveAndContinueButton"/>
+        </buttons>
+        <namespace>configurator_subsection_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>configurator_subsection_form.subsection_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="subsection_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="configurator/subsection/save"/>
+        </settings>
+        <dataProvider class="ItechPanel\Configurator\Model\ResourceModel\Subsection\DataProvider" name="subsection_form_data_source">
+            <settings>
+                <requestFieldName>subsection_id</requestFieldName>
+                <primaryFieldName>subsection_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label translate="true">General Information</label>
+        </settings>
+        <field name="subsection_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">subsection</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>subsection_id</dataScope>
+            </settings>
+        </field>
+        <field name="title" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">subsection</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <dataScope>title</dataScope>
+            </settings>
+        </field>
+        <field name="label" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">subsection</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Label</label>
+                <dataScope>label</dataScope>
+            </settings>
+        </field>
+        <field name="price" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">subsection</item>
+                    <item name="addbefore" xsi:type="string">$</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Price</label>
+                <dataScope>price</dataScope>
+            </settings>
+        </field>
+        <field name="is_required" sortOrder="40" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">subsection</item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Is Required</label>
+                <dataScope>is_required</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="section_id" sortOrder="45" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">subsection</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Select Section</label>
+                <dataScope>section_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="ItechPanel\Configurator\Model\Source\Section"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="position" sortOrder="50" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">subsection</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Sort Order</label>
+                <dataScope>position</dataScope>
+            </settings>
+        </field>
+        <field name="is_active" sortOrder="60" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">subsection</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable Subsection</label>
+                <dataScope>is_active</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="assign_products" sortOrder="100">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Assign Products</label>
+        </settings>
+        <container name="assign_products_container" sortOrder="160">
+            <htmlContent name="html_content">
+                <block name="subsection_products_grid" class="ItechPanel\Configurator\Block\Adminhtml\Subsection\AssignProducts"/>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

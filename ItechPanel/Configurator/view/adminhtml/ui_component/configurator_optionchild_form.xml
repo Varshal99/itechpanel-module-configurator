@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">configurator_optionchild_form.optionchild_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Option Child Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="ItechPanel\Configurator\Block\Adminhtml\OptionChild\Edit\BackButton"/>
+            <button name="delete" class="ItechPanel\Configurator\Block\Adminhtml\OptionChild\Edit\DeleteButton"/>
+            <button name="save" class="ItechPanel\Configurator\Block\Adminhtml\OptionChild\Edit\SaveButton"/>
+            <button name="save_and_continue" class="ItechPanel\Configurator\Block\Adminhtml\OptionChild\Edit\SaveAndContinueButton"/>
+        </buttons>
+        <namespace>configurator_optionchild_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>configurator_optionchild_form.optionchild_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="optionchild_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="configurator/optionchild/save"/>
+        </settings>
+        <dataProvider class="ItechPanel\Configurator\Model\ResourceModel\OptionChild\DataProvider" name="optionchild_form_data_source">
+            <settings>
+                <requestFieldName>child_id</requestFieldName>
+                <primaryFieldName>child_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label translate="true">General Information</label>
+        </settings>
+        <field name="child_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>child_id</dataScope>
+            </settings>
+        </field>
+        <field name="title" sortOrder="10" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Title</label>
+                <dataScope>title</dataScope>
+            </settings>
+        </field>
+        <field name="label" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Label</label>
+                <dataScope>label</dataScope>
+            </settings>
+        </field>
+        <field name="tooltip" sortOrder="30" formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Tooltip</label>
+                <dataScope>tooltip</dataScope>
+            </settings>
+        </field>
+        <field name="price" sortOrder="40" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                    <item name="addbefore" xsi:type="string">$</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Price</label>
+                <dataScope>price</dataScope>
+            </settings>
+        </field>
+        <field name="option_id" sortOrder="45" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Select Parent Option</label>
+                <dataScope>option_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="ItechPanel\Configurator\Model\Source\Option"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="optiongroup_id" sortOrder="46" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Select Option Group</label>
+                <dataScope>optiongroup_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="ItechPanel\Configurator\Model\Source\OptionGroup"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="position" sortOrder="50" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Position</label>
+                <dataScope>position</dataScope>
+            </settings>
+        </field>
+        <field name="thumbnail" sortOrder="60" formElement="imageUploader">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>ui/form/element/uploader/image</elementTmpl>
+                <dataType>string</dataType>
+                <label translate="true">Thumbnail</label>
+                <visible>true</visible>
+                <required>false</required>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <uploaderConfig>
+                            <param xsi:type="url" name="url" path="configurator/optionchild/upload"/>
+                        </uploaderConfig>
+                        <allowedExtensions>jpg jpeg gif png webp</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <field name="is_active" sortOrder="70" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">optionchild</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable Option Child</label>
+                <dataScope>is_active</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="assign_products">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Select Products</label>
+        </settings>
+        <container name="assign_products_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">160</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <block name="optionchild_products" class="ItechPanel\Configurator\Block\Adminhtml\OptionChild\AssignProducts"/>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

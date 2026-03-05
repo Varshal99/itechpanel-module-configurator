@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.main">
+            <block class="ItechPanel\Configurator\Block\Product\View\Configurator" 
+                   name="product.configurator" 
+                   template="ItechPanel_Configurator::product/view/configurator.phtml"
+                   before="product.info.media"
+                   ifconfig="itechpanel_configurator/general/enabled">
+                <arguments>
+                    <argument name="cache_lifetime" xsi:type="number">0</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

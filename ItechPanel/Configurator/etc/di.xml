@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Section Repository -->
+    <preference for="ItechPanel\Configurator\Api\SectionRepositoryInterface" type="ItechPanel\Configurator\Model\SectionRepository"/>
+    <preference for="ItechPanel\Configurator\Api\Data\SectionInterface" type="ItechPanel\Configurator\Model\Section"/>
+    
+    <!-- Subsection Repository -->
+    <preference for="ItechPanel\Configurator\Api\SubsectionRepositoryInterface" type="ItechPanel\Configurator\Model\SubsectionRepository"/>
+    <preference for="ItechPanel\Configurator\Api\Data\SubsectionInterface" type="ItechPanel\Configurator\Model\Subsection"/>
+    
+    <!-- Option Repository -->
+    <preference for="ItechPanel\Configurator\Api\OptionRepositoryInterface" type="ItechPanel\Configurator\Model\OptionRepository"/>
+    <preference for="ItechPanel\Configurator\Api\Data\OptionInterface" type="ItechPanel\Configurator\Model\Option"/>
+    
+    <!-- OptionChild Repository -->
+    <preference for="ItechPanel\Configurator\Api\OptionChildRepositoryInterface" type="ItechPanel\Configurator\Model\OptionChildRepository"/>
+    <preference for="ItechPanel\Configurator\Api\Data\OptionChildInterface" type="ItechPanel\Configurator\Model\OptionChild"/>
+    
+    <!-- OptionGroup Repository -->
+    <preference for="ItechPanel\Configurator\Api\OptionGroupRepositoryInterface" type="ItechPanel\Configurator\Model\OptionGroupRepository"/>
+    <preference for="ItechPanel\Configurator\Api\Data\OptionGroupInterface" type="ItechPanel\Configurator\Model\OptionGroup"/>
+    
+    <!-- Image Repository -->
+    <preference for="ItechPanel\Configurator\Api\ImageRepositoryInterface" type="ItechPanel\Configurator\Model\ImageRepository"/>
+    <preference for="ItechPanel\Configurator\Api\Data\ImageInterface" type="ItechPanel\Configurator\Model\Image"/>
+    
+    <!-- Data Provider Configuration -->
+    <type name="ItechPanel\Configurator\Model\ResourceModel\Section\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object">ItechPanel\Configurator\Model\ResourceModel\Section\CollectionFactory</argument>
+        </arguments>
+    </type>
+    
+    <type name="ItechPanel\Configurator\Model\ResourceModel\Subsection\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object">ItechPanel\Configurator\Model\ResourceModel\Subsection\CollectionFactory</argument>
+        </arguments>
+    </type>
+    
+    <type name="ItechPanel\Configurator\Model\ResourceModel\Option\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object">ItechPanel\Configurator\Model\ResourceModel\Option\CollectionFactory</argument>
+        </arguments>
+    </type>
+    
+    <type name="ItechPanel\Configurator\Model\ResourceModel\OptionChild\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object">ItechPanel\Configurator\Model\ResourceModel\OptionChild\CollectionFactory</argument>
+        </arguments>
+    </type>
+    
+    <type name="ItechPanel\Configurator\Model\ResourceModel\OptionGroup\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object">ItechPanel\Configurator\Model\ResourceModel\OptionGroup\CollectionFactory</argument>
+        </arguments>
+    </type>
+    
+    <type name="ItechPanel\Configurator\Model\ResourceModel\Image\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object">ItechPanel\Configurator\Model\ResourceModel\Image\CollectionFactory</argument>
+        </arguments>
+    </type>
+    
+    <!-- Plugin for converting configurator options from quote to order -->
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="convert_configurator_options" type="ItechPanel\Configurator\Plugin\Quote\Model\Quote\Item\ToOrderItem" sortOrder="10"/>
+    </type>
+    
+    <!-- UI Component Data Source Registration -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="configurator_section_listing_data_source" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\Section\Grid\Collection</item>
+                <item name="configurator_subsection_listing_data_source" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\Subsection\Grid\Collection</item>
+                <item name="configurator_option_listing_data_source" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\Option\Grid\Collection</item>
+                <item name="configurator_optionchild_listing_data_source" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\OptionChild\Grid\Collection</item>
+                <item name="configurator_optiongroup_listing_data_source" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\OptionGroup\Grid\Collection</item>
+                <item name="configurator_image_listing_data_source" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\Image\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <!-- Virtual Types for Grid Collections -->
+    <virtualType name="ItechPanel\Configurator\Model\ResourceModel\Section\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">itechpanel_configurator_section</argument>
+            <argument name="resourceModel" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\Section</argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="ItechPanel\Configurator\Model\ResourceModel\Subsection\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">itechpanel_configurator_subsection</argument>
+            <argument name="resourceModel" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\Subsection</argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="ItechPanel\Configurator\Model\ResourceModel\Option\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">itechpanel_configurator_option</argument>
+            <argument name="resourceModel" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\Option</argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="ItechPanel\Configurator\Model\ResourceModel\OptionChild\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">itechpanel_configurator_option_child</argument>
+            <argument name="resourceModel" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\OptionChild</argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="ItechPanel\Configurator\Model\ResourceModel\OptionGroup\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">itechpanel_configurator_option_group</argument>
+            <argument name="resourceModel" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\OptionGroup</argument>
+        </arguments>
+    </virtualType>
+    
+    <virtualType name="ItechPanel\Configurator\Model\ResourceModel\Image\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">itechpanel_configurator_image</argument>
+            <argument name="resourceModel" xsi:type="string">ItechPanel\Configurator\Model\ResourceModel\Image</argument>
+        </arguments>
+    </virtualType>
+    
+    <!-- Product repository plugins for saving and loading configurator data
+    <type name="Magento\Catalog\Api\ProductRepositoryInterface">
+        <plugin name="save_configurator_data" type="ItechPanel\Configurator\Plugin\Catalog\Model\ProductRepository" sortOrder="10"/>
+        <plugin name="load_configurator_data" type="ItechPanel\Configurator\Plugin\Catalog\Model\ProductRepository\LoadPlugin" sortOrder="10"/>
+    </type> -->
+
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Save">
+		<plugin name="save_configurator_data_controller" 
+				type="ItechPanel\Configurator\Plugin\Catalog\Model\ProductSavePlugin" 
+				sortOrder="10"/>
+	</type>
+</config>

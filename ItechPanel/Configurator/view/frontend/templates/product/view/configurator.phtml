@@ -1,0 +1,314 @@
+<?php
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * @var $block \ItechPanel\Configurator\Block\Product\View\Configurator
+ * @var $escaper \Magento\Framework\Escaper
+ */
+
+if (!$block->isConfiguratorEnabled()) return;
+
+$productId = $block->getProductId();
+$basePrice = $block->getBasePriceValue();
+$basePriceFormatted = $block->getBasePrice();
+$productImageUrl = $block->getProductImageUrl();
+$configurationUrl = $block->getConfigurationUrl();
+$imagesUrl = $block->getImagesUrl();
+$calculatePriceUrl = $block->getCalculatePriceUrl();
+
+?>
+
+<style>
+    .is-configurator-product .product.media,
+    .is-configurator-product .product-info-main > *:not(.product-configurator) {
+        display: none !important;
+    }
+    .is-configurator-product .column.main .product-info-main {
+        width: 100% !important; float: none !important;
+    }
+</style>
+<script>document.body.classList.add('is-configurator-product');</script>
+
+<div class="product-configurator" 
+     x-data="configurator(
+        '<?= $escaper->escapeJs($configurationUrl) ?>',
+        '<?= $escaper->escapeJs($imagesUrl) ?>',
+        '<?= $escaper->escapeJs($calculatePriceUrl) ?>',
+        <?= (int)$productId ?>,
+        <?= (float)$basePrice ?>
+     )"
+     x-init="init()">
+
+    <div x-show="loading" class="flex items-center justify-center py-12">
+        <span class="ml-3 text-gray-600"><?= $escaper->escapeHtml(__('Loading configurator...')) ?></span>
+    </div>
+
+    <div x-show="!loading && configuration" class="configurator-wrapper">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            
+            <div class="configurator-images">
+				<div class="sticky top-4">
+					<div class="bg-gray-50 rounded-lg p-4 aspect-square flex items-center justify-center relative overflow-hidden">
+						
+						<!-- BASE BIKE -->
+						<img src="<?= $escaper->escapeUrl($productImageUrl) ?>"
+							 class="w-full h-full object-contain absolute inset-0 z-0"/>
+
+						<!-- FRAME -->
+						<img x-show="layers.frame"
+							 :src="layers.frame"
+							 class="absolute inset-0 w-full h-full object-contain z-10"/>
+
+						<!-- SEAT -->
+						<img x-show="layers.seat"
+							 :src="layers.seat"
+							 class="absolute inset-0 w-full h-full object-contain z-20"/>
+
+						<img :src="'<?= $escaper->escapeUrl($productImageUrl) ?>'" 
+							 class="w-full h-full object-contain relative z-0 transition-opacity duration-300" />
+
+						<img x-show="layers.bottom_image" :src="layers.bottom_image || ''" class="absolute inset-0 w-full h-full object-contain z-0 transition-opacity duration-300" />
+						<img x-show="layers.back_image" :src="layers.back_image || ''" class="absolute inset-0 w-full h-full object-contain z-20 transition-opacity duration-300" />
+						<img x-show="layers.left_image" :src="layers.left_image || ''" class="absolute inset-0 w-full h-full object-contain z-30 transition-opacity duration-300" />
+						<img x-show="layers.right_image" :src="layers.right_image || ''" class="absolute inset-0 w-full h-full object-contain z-40 transition-opacity duration-300" />
+						<img x-show="layers.front_image" :src="layers.front_image || ''" class="absolute inset-0 w-full h-full object-contain z-50 transition-opacity duration-300" />
+						<img x-show="layers.top_image" :src="layers.top_image || ''" class="absolute inset-0 w-full h-full object-contain z-60 transition-opacity duration-300" />
+						
+					</div>
+				</div>
+			</div>
+
+            <div class="configurator-options">
+                <div class="bg-primary text-white rounded-lg p-4 mb-6 shadow-md">
+                    <div class="text-sm font-medium opacity-90"><?= $escaper->escapeHtml(__('Current Price')) ?></div>
+                    <div class="text-3xl font-bold mt-1" x-text="formatPrice(currentPrice)">
+                        <?= $escaper->escapeHtml($basePriceFormatted) ?>
+                    </div>
+                </div>
+
+                <div x-show="sections.length > 0" class="mb-6 border-b border-gray-200 pb-4 flex flex-wrap gap-2">
+                    <template x-for="(section, index) in sections" :key="section.section_id">
+                        <button type="button" @click="activeSection = index"
+                                :class="{'bg-primary text-white shadow': activeSection === index, 'bg-gray-100 hover:bg-gray-200': activeSection !== index}"
+                                class="px-4 py-2 rounded-lg font-medium transition-all"
+                                x-text="section.label"></button>
+                    </template>
+                </div>
+
+                <template x-for="(section, sectionIndex) in sections" :key="section.section_id">
+                    <div x-show="activeSection === sectionIndex" class="space-y-6">
+                        <template x-for="subsection in section.subsections" :key="subsection.subsection_id">
+                            <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                                <div class="flex items-start justify-between mb-4 border-b pb-2">
+                                    <h3 class="text-lg font-semibold text-gray-900" x-text="subsection.label"></h3>
+                                    <span x-show="subsection.is_required" class="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">
+                                        <?= $escaper->escapeHtml(__('Required')) ?>
+                                    </span>
+                                </div>
+
+                                <template x-for="option in subsection.options" :key="option.option_id">
+                                    <div class="mb-4">
+                                        <h4 class="text-sm font-medium text-gray-700 mb-3" x-text="option.label"></h4>
+
+                                        <template x-if="option.type === 'button'">
+                                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                                <template x-for="child in option.children" :key="child.child_id">
+                                                    <button type="button" @click="selectOption(option.option_id, child.child_id, child.price)"
+                                                            :class="{'ring-2 ring-primary bg-blue-50 border-primary': isSelected(option.option_id, child.child_id)}"
+                                                            class="border border-gray-200 rounded-lg p-3 text-left transition-all hover:shadow-md bg-white">
+                                                        <img x-show="child.thumbnail" :src="child.thumbnail" class="w-full h-16 object-contain mb-2 mix-blend-multiply" />
+                                                        <div class="text-sm font-medium text-gray-800" x-text="child.label"></div>
+                                                        <div x-show="child.price > 0" class="text-xs font-semibold text-green-600 mt-1" x-text="'+' + formatPrice(child.price)"></div>
+                                                    </button>
+                                                </template>
+                                            </div>
+                                        </template>
+
+                                        <template x-if="option.type === 'dropdown'">
+                                            <select @change="selectOption(option.option_id, $event.target.value, getPriceFromSelect(option.children, $event.target.value))"
+                                                    class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white shadow-sm focus:ring-primary focus:border-primary">
+                                                <option value=""><?= $escaper->escapeHtml(__('-- Select Option --')) ?></option>
+                                                <template x-for="child in option.children" :key="child.child_id">
+                                                    <option :value="child.child_id" :selected="isSelected(option.option_id, child.child_id)"
+                                                            x-text="child.label + (child.price > 0 ? ' (+' + formatPrice(child.price) + ')' : '')">
+                                                    </option>
+                                                </template>
+                                            </select>
+                                        </template>
+
+                                        <template x-if="option.type === 'swatch'">
+                                            <div class="flex flex-wrap gap-3">
+                                                <template x-for="child in option.children" :key="child.child_id">
+                                                    <button type="button" @click="selectOption(option.option_id, child.child_id, child.price)"
+                                                            :class="{'ring-2 ring-primary ring-offset-2': isSelected(option.option_id, child.child_id)}"
+                                                            class="w-14 h-14 rounded-full border border-gray-200 overflow-hidden hover:scale-105 transition-transform shadow-sm bg-white"
+                                                            :title="child.label + (child.price > 0 ? ' (+' + formatPrice(child.price) + ')' : '')">
+                                                        <img x-show="child.thumbnail" :src="child.thumbnail" class="w-full h-full object-cover" />
+                                                    </button>
+                                                </template>
+                                            </div>
+                                        </template>
+
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function configurator(configurationUrl, imagesUrl, calculatePriceUrl, productId, basePrice) {
+    return {
+        loading: false,
+        configuration: null,
+        sections: [],
+        selectedOptions: {},
+        selectedPrices: {},
+        currentPrice: basePrice,
+        basePrice: basePrice,
+
+        configurationUrl: configurationUrl,
+        imagesUrl: imagesUrl,
+        calculatePriceUrl: calculatePriceUrl,
+        productId: productId,
+
+        currentImage: null,
+        layers: {},
+        activeSection: 0,
+
+        init() {
+            this.loadConfiguration();
+        },
+
+        getFormKey() {
+            const match = document.cookie.match(/(?:^|;) ?form_key=([^;]*)(?:;|$)/);
+            return match ? match[1] : '';
+        },
+
+        async loadConfiguration() {
+            this.loading = true;
+            try {
+                const response = await fetch(this.configurationUrl);
+                const data = await response.json();
+                if (data.success) {
+                    this.configuration = data.data;
+                    this.sections = data.data.sections || [];
+                }
+            } catch (error) {
+                console.error('Configuration load error:', error);
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        selectOption(optionId, childId, price) {
+            if (!childId) {
+                delete this.selectedOptions[optionId];
+                delete this.selectedPrices[optionId];
+            } else {
+                this.selectedOptions[optionId] = parseInt(childId);
+                this.selectedPrices[optionId] = parseFloat(price) || 0;
+            }
+
+            this.recalculatePrice();
+            this.updateImages();
+        },
+
+        isSelected(optionId, childId) {
+            return this.selectedOptions[optionId] === parseInt(childId);
+        },
+
+        async recalculatePrice() {
+            let total = this.basePrice;
+            for (let id in this.selectedPrices) {
+                total += this.selectedPrices[id];
+            }
+            this.currentPrice = total;
+
+            try {
+                const formData = new FormData();
+                formData.append('product_id', this.productId);
+                formData.append('selected_options', JSON.stringify(this.selectedOptions));
+                formData.append('form_key', this.getFormKey());
+
+                const response = await fetch(this.calculatePriceUrl, {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    body: formData
+                });
+
+                if (!response.ok) return;
+
+                const data = await response.json();
+                if (data.success) {
+                    this.currentPrice = parseFloat(data.total_price);
+                }
+            } catch (error) {
+                console.error('Price calculation error:', error);
+            }
+        },
+
+        async updateImages() {
+            if (Object.keys(this.selectedOptions).length === 0) {
+                this.currentImage = null;
+                this.layers = {};
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('product_id', this.productId);
+                formData.append('selected_children', JSON.stringify(this.selectedOptions));
+                formData.append('form_key', this.getFormKey());
+
+                const response = await fetch(this.imagesUrl, {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    console.error('Image request failed:', response.status);
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (data.success && data.images) {
+                    this.currentImage = data.images.upload_image || null;
+                    this.layers = {
+						frame: data.images.frame || null,
+						seat: data.images.seat || null
+					};
+                } else {
+                    this.currentImage = null;
+                    this.layers = {};
+                }
+
+            } catch (error) {
+                console.error('Image update error:', error);
+            }
+        },
+
+        formatPrice(price) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(price);
+        }
+    }
+}
+</script>
+
+<style>
+:root {
+    --color-primary: #2563eb;
+}
+.bg-primary { background-color: var(--color-primary); }
+.text-primary { color: var(--color-primary); }
+.ring-primary { --tw-ring-color: var(--color-primary); }
+.border-primary { border-color: var(--color-primary); }
+</style>

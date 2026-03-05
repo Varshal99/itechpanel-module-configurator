@@ -1,0 +1,25 @@
+{
+    "name": "itechpanel/module-configurator",
+    "description": "Product Configurator Module for Magento 2.4 with Hyvä Enterprise Theme Compatibility",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "php": "~8.1.0||~8.2.0||~8.3.0",
+        "magento/framework": "^103.0",
+        "magento/module-backend": "^102.0",
+        "magento/module-catalog": "^104.0",
+        "magento/module-ui": "^101.2"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "ItechPanel\\Configurator\\": ""
+        }
+    }
+}
