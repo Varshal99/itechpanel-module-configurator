@@ -1,0 +1,59 @@
+<?php
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @var \ItechPanel\Configurator\Block\Cart\Item\Renderer\Configurator $block
+ */
+?>
+<?php if ($block->hasConfiguratorOptions()): ?>
+    <div class="configurator-options">
+        <div class="configurator-title">
+            <strong><?= $block->escapeHtml(__('Your Selections:')) ?></strong>
+        </div>
+        <dl class="item-options">
+            <?php foreach ($block->getConfiguratorOptions() as $option): ?>
+                <dt class="configurator-option-label">
+                    <?= $block->escapeHtml($option['label']) ?>
+                </dt>
+                <dd class="configurator-option-value">
+                    <?= $block->escapeHtml($option['value']) ?>
+                    <?php if (isset($option['price']) && $option['price'] > 0): ?>
+                        <span class="configurator-option-price">
+                            (+<?= $block->escapeHtml($block->formatPrice($option['price'])) ?>)
+                        </span>
+                    <?php endif; ?>
+                </dd>
+            <?php endforeach; ?>
+        </dl>
+    </div>
+    <style>
+        .configurator-options {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+        .configurator-title {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .configurator-options .item-options {
+            margin: 0;
+        }
+        .configurator-option-label {
+            font-weight: 500;
+            margin-top: 5px;
+            color: #333;
+        }
+        .configurator-option-value {
+            margin-left: 20px;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        .configurator-option-price {
+            color: #1979c3;
+            font-weight: 600;
+        }
+    </style>
+<?php endif; ?>

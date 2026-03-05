@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    
+    <!-- Table 1: itechpanel_configurator_section -->
+    <table name="itechpanel_configurator_section" resource="default" engine="innodb" comment="Configurator Section Table">
+        <column xsi:type="int" name="section_id" unsigned="true" nullable="false" identity="true" comment="Section ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Section Title"/>
+        <column xsi:type="varchar" name="label" nullable="true" length="255" comment="Section Label"/>
+        <column xsi:type="int" name="position" unsigned="true" nullable="false" default="0" comment="Position"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="section_id"/>
+        </constraint>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_SECTION_TITLE" indexType="fulltext">
+            <column name="title"/>
+        </index>
+    </table>
+
+    <!-- Table 2: itechpanel_configurator_subsection -->
+    <table name="itechpanel_configurator_subsection" resource="default" engine="innodb" comment="Configurator Subsection Table">
+        <column xsi:type="int" name="subsection_id" unsigned="true" nullable="false" identity="true" comment="Subsection ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Subsection Title"/>
+        <column xsi:type="varchar" name="label" nullable="true" length="255" comment="Subsection Label"/>
+        <column xsi:type="decimal" name="price" scale="4" precision="12" unsigned="false" nullable="true" default="0" comment="Price"/>
+        <column xsi:type="smallint" name="is_required" unsigned="true" nullable="false" default="0" comment="Is Required"/>
+        <column xsi:type="int" name="position" unsigned="true" nullable="false" default="0" comment="Position"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="subsection_id"/>
+        </constraint>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_SUBSECTION_TITLE" indexType="fulltext">
+            <column name="title"/>
+        </index>
+    </table>
+
+    <!-- Table 3: itechpanel_configurator_option -->
+    <table name="itechpanel_configurator_option" resource="default" engine="innodb" comment="Configurator Option Table">
+        <column xsi:type="int" name="option_id" unsigned="true" nullable="false" identity="true" comment="Option ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Option Title"/>
+        <column xsi:type="varchar" name="label" nullable="true" length="255" comment="Option Label"/>
+        <column xsi:type="int" name="position" unsigned="true" nullable="false" default="0" comment="Position"/>
+        <column xsi:type="varchar" name="type" nullable="false" length="50" default="button" comment="Type"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="option_id"/>
+        </constraint>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_OPTION_TITLE" indexType="fulltext">
+            <column name="title"/>
+        </index>
+    </table>
+
+    <!-- Table 4: itechpanel_configurator_option_child -->
+    <table name="itechpanel_configurator_option_child" resource="default" engine="innodb" comment="Configurator Option Child Table">
+        <column xsi:type="int" name="child_id" unsigned="true" nullable="false" identity="true" comment="Child ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Option Child Title"/>
+        <column xsi:type="varchar" name="label" nullable="true" length="255" comment="Option Child Label"/>
+        <column xsi:type="text" name="tooltip" nullable="true" comment="Tooltip"/>
+        <column xsi:type="decimal" name="price" scale="4" precision="12" unsigned="false" nullable="true" default="0" comment="Price"/>
+        <column xsi:type="int" name="position" unsigned="true" nullable="false" default="0" comment="Position"/>
+        <column xsi:type="varchar" name="thumbnail" nullable="true" length="255" comment="Thumbnail"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="child_id"/>
+        </constraint>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_OPTION_CHILD_TITLE" indexType="fulltext">
+            <column name="title"/>
+        </index>
+    </table>
+
+    <!-- Table 5: itechpanel_configurator_option_group -->
+    <table name="itechpanel_configurator_option_group" resource="default" engine="innodb" comment="Configurator Option Group Table">
+        <column xsi:type="int" name="group_id" unsigned="true" nullable="false" identity="true" comment="Group ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Group Title"/>
+        <column xsi:type="varchar" name="label" nullable="true" length="255" comment="Group Label"/>
+        <column xsi:type="int" name="position" unsigned="true" nullable="false" default="0" comment="Position"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="group_id"/>
+        </constraint>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_OPTION_GROUP_TITLE" indexType="fulltext">
+            <column name="title"/>
+        </index>
+    </table>
+
+    <!-- Table 6: itechpanel_configurator_image -->
+    <table name="itechpanel_configurator_image" resource="default" engine="innodb" comment="Configurator Image Table">
+        <column xsi:type="int" name="image_id" unsigned="true" nullable="false" identity="true" comment="Image ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Image Title"/>
+        <column xsi:type="varchar" name="upload_image" nullable="true" length="255" comment="Upload Image"/>
+        <column xsi:type="varchar" name="top_image" nullable="true" length="255" comment="Top Image"/>
+        <column xsi:type="varchar" name="bottom_image" nullable="true" length="255" comment="Bottom Image"/>
+        <column xsi:type="varchar" name="left_image" nullable="true" length="255" comment="Left Image"/>
+        <column xsi:type="varchar" name="right_image" nullable="true" length="255" comment="Right Image"/>
+        <column xsi:type="varchar" name="front_image" nullable="true" length="255" comment="Front Image"/>
+        <column xsi:type="varchar" name="back_image" nullable="true" length="255" comment="Back Image"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="image_id"/>
+        </constraint>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_IMAGE_TITLE" indexType="fulltext">
+            <column name="title"/>
+        </index>
+    </table>
+
+    <!-- Table 7: itechpanel_configurator_section_subsection (relationship) -->
+    <table name="itechpanel_configurator_section_subsection" resource="default" engine="innodb" comment="Section to Subsection Link Table">
+        <column xsi:type="int" name="section_id" unsigned="true" nullable="false" comment="Section ID"/>
+        <column xsi:type="int" name="subsection_id" unsigned="true" nullable="false" comment="Subsection ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="section_id"/>
+            <column name="subsection_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_SECTION_SUBSECTION_SECTION_ID" table="itechpanel_configurator_section_subsection" column="section_id" referenceTable="itechpanel_configurator_section" referenceColumn="section_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_SECTION_SUBSECTION_SUBSECTION_ID" table="itechpanel_configurator_section_subsection" column="subsection_id" referenceTable="itechpanel_configurator_subsection" referenceColumn="subsection_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_SECTION_SUBSECTION_SUBSECTION_ID" indexType="btree">
+            <column name="subsection_id"/>
+        </index>
+    </table>
+
+    <!-- Table 8: itechpanel_configurator_subsection_option (relationship) -->
+    <table name="itechpanel_configurator_subsection_option" resource="default" engine="innodb" comment="Subsection to Option Link Table">
+        <column xsi:type="int" name="subsection_id" unsigned="true" nullable="false" comment="Subsection ID"/>
+        <column xsi:type="int" name="option_id" unsigned="true" nullable="false" comment="Option ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="subsection_id"/>
+            <column name="option_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_SUBSECTION_OPTION_SUBSECTION_ID" table="itechpanel_configurator_subsection_option" column="subsection_id" referenceTable="itechpanel_configurator_subsection" referenceColumn="subsection_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_SUBSECTION_OPTION_OPTION_ID" table="itechpanel_configurator_subsection_option" column="option_id" referenceTable="itechpanel_configurator_option" referenceColumn="option_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_SUBSECTION_OPTION_OPTION_ID" indexType="btree">
+            <column name="option_id"/>
+        </index>
+    </table>
+
+    <!-- Table 9: itechpanel_configurator_option_child_option (relationship) -->
+    <table name="itechpanel_configurator_option_child_option" resource="default" engine="innodb" comment="Option Child to Option Link Table">
+        <column xsi:type="int" name="child_id" unsigned="true" nullable="false" comment="Child ID"/>
+        <column xsi:type="int" name="option_id" unsigned="true" nullable="false" comment="Option ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="child_id"/>
+            <column name="option_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_CHILD_OPTION_CHILD_ID" table="itechpanel_configurator_option_child_option" column="child_id" referenceTable="itechpanel_configurator_option_child" referenceColumn="child_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_CHILD_OPTION_OPTION_ID" table="itechpanel_configurator_option_child_option" column="option_id" referenceTable="itechpanel_configurator_option" referenceColumn="option_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_OPTION_CHILD_OPTION_OPTION_ID" indexType="btree">
+            <column name="option_id"/>
+        </index>
+    </table>
+
+    <!-- Table 10: itechpanel_configurator_option_child_group (relationship) -->
+    <table name="itechpanel_configurator_option_child_group" resource="default" engine="innodb" comment="Option Child to Group Link Table">
+        <column xsi:type="int" name="child_id" unsigned="true" nullable="false" comment="Child ID"/>
+        <column xsi:type="int" name="group_id" unsigned="true" nullable="false" comment="Group ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="child_id"/>
+            <column name="group_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_CHILD_GROUP_CHILD_ID" table="itechpanel_configurator_option_child_group" column="child_id" referenceTable="itechpanel_configurator_option_child" referenceColumn="child_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_CHILD_GROUP_GROUP_ID" table="itechpanel_configurator_option_child_group" column="group_id" referenceTable="itechpanel_configurator_option_group" referenceColumn="group_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_OPTION_CHILD_GROUP_GROUP_ID" indexType="btree">
+            <column name="group_id"/>
+        </index>
+    </table>
+
+    <!-- Table 11: itechpanel_configurator_image_child (relationship) -->
+    <table name="itechpanel_configurator_image_child" resource="default" engine="innodb" comment="Image to Child Option Link Table">
+        <column xsi:type="int" name="image_id" unsigned="true" nullable="false" comment="Image ID"/>
+        <column xsi:type="int" name="child_id" unsigned="true" nullable="false" comment="Child ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="image_id"/>
+            <column name="child_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_IMAGE_CHILD_IMAGE_ID" table="itechpanel_configurator_image_child" column="image_id" referenceTable="itechpanel_configurator_image" referenceColumn="image_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_IMAGE_CHILD_CHILD_ID" table="itechpanel_configurator_image_child" column="child_id" referenceTable="itechpanel_configurator_option_child" referenceColumn="child_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_IMAGE_CHILD_CHILD_ID" indexType="btree">
+            <column name="child_id"/>
+        </index>
+    </table>
+
+    <!-- Table 12: itechpanel_configurator_section_product (relationship) -->
+    <table name="itechpanel_configurator_section_product" resource="default" engine="innodb" comment="Section to Product Link Table">
+        <column xsi:type="int" name="section_id" unsigned="true" nullable="false" comment="Section ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" comment="Product ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="section_id"/>
+            <column name="product_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_SECTION_PRODUCT_SECTION_ID" table="itechpanel_configurator_section_product" column="section_id" referenceTable="itechpanel_configurator_section" referenceColumn="section_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_SECTION_PRODUCT_PRODUCT_ID" table="itechpanel_configurator_section_product" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_SECTION_PRODUCT_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+    </table>
+
+    <!-- Table 13: itechpanel_configurator_subsection_product (relationship) -->
+    <table name="itechpanel_configurator_subsection_product" resource="default" engine="innodb" comment="Subsection to Product Link Table">
+        <column xsi:type="int" name="subsection_id" unsigned="true" nullable="false" comment="Subsection ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" comment="Product ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="subsection_id"/>
+            <column name="product_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_SUBSECTION_PRODUCT_SUBSECTION_ID" table="itechpanel_configurator_subsection_product" column="subsection_id" referenceTable="itechpanel_configurator_subsection" referenceColumn="subsection_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_SUBSECTION_PRODUCT_PRODUCT_ID" table="itechpanel_configurator_subsection_product" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_SUBSECTION_PRODUCT_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+    </table>
+
+    <!-- Table 14: itechpanel_configurator_option_product (relationship) -->
+    <table name="itechpanel_configurator_option_product" resource="default" engine="innodb" comment="Option to Product Link Table">
+        <column xsi:type="int" name="option_id" unsigned="true" nullable="false" comment="Option ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" comment="Product ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="option_id"/>
+            <column name="product_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_PRODUCT_OPTION_ID" table="itechpanel_configurator_option_product" column="option_id" referenceTable="itechpanel_configurator_option" referenceColumn="option_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_PRODUCT_PRODUCT_ID" table="itechpanel_configurator_option_product" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_OPTION_PRODUCT_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+    </table>
+
+    <!-- Table 15: itechpanel_configurator_option_child_product (relationship) -->
+    <table name="itechpanel_configurator_option_child_product" resource="default" engine="innodb" comment="Option Child to Product Link Table">
+        <column xsi:type="int" name="child_id" unsigned="true" nullable="false" comment="Child ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" comment="Product ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="child_id"/>
+            <column name="product_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_CHILD_PRODUCT_CHILD_ID" table="itechpanel_configurator_option_child_product" column="child_id" referenceTable="itechpanel_configurator_option_child" referenceColumn="child_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_CHILD_PRODUCT_PRODUCT_ID" table="itechpanel_configurator_option_child_product" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_OPTION_CHILD_PRODUCT_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+    </table>
+
+    <!-- Table 16: itechpanel_configurator_option_group_product (relationship) -->
+    <table name="itechpanel_configurator_option_group_product" resource="default" engine="innodb" comment="Option Group to Product Link Table">
+        <column xsi:type="int" name="group_id" unsigned="true" nullable="false" comment="Group ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" comment="Product ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="group_id"/>
+            <column name="product_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_GROUP_PRODUCT_GROUP_ID" table="itechpanel_configurator_option_group_product" column="group_id" referenceTable="itechpanel_configurator_option_group" referenceColumn="group_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_OPTION_GROUP_PRODUCT_PRODUCT_ID" table="itechpanel_configurator_option_group_product" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_OPTION_GROUP_PRODUCT_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+    </table>
+
+    <!-- Table 17: itechpanel_configurator_image_product (relationship) -->
+    <table name="itechpanel_configurator_image_product" resource="default" engine="innodb" comment="Image to Product Link Table">
+        <column xsi:type="int" name="image_id" unsigned="true" nullable="false" comment="Image ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" comment="Product ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="image_id"/>
+            <column name="product_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_IMAGE_PRODUCT_IMAGE_ID" table="itechpanel_configurator_image_product" column="image_id" referenceTable="itechpanel_configurator_image" referenceColumn="image_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FK_IMAGE_PRODUCT_PRODUCT_ID" table="itechpanel_configurator_image_product" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="ITECHPANEL_CONFIGURATOR_IMAGE_PRODUCT_PRODUCT_ID" indexType="btree">
+            <column name="product_id"/>
+        </index>
+    </table>
+
+    <!-- Table 18: itechpanel_configurator_product -->
+    <table name="itechpanel_configurator_product" resource="default" engine="innodb" comment="Product Configurator Table">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" comment="Product ID"/>
+        <column xsi:type="smallint" name="is_configurator_enabled" unsigned="true" nullable="false" default="0" comment="Is Configurator Enabled"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_CONFIGURATOR_PRODUCT_PRODUCT_ID" table="itechpanel_configurator_product" column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="ITECHPANEL_CONFIGURATOR_PRODUCT_PRODUCT_ID">
+            <column name="product_id"/>
+        </constraint>
+    </table>
+
+</schema>

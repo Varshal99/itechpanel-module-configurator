@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.cart.item.renderers.default">
+            <block class="ItechPanel\Configurator\Block\Cart\Item\Renderer\Configurator" 
+                   name="checkout.cart.item.configurator.options" 
+                   template="ItechPanel_Configurator::cart/item/configurator.phtml" 
+                   after="product.info.options">
+                <arguments>
+                    <argument name="item" xsi:type="object">\Magento\Checkout\Block\Cart\Item\Renderer::getItem</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        
+        <referenceBlock name="checkout.cart.item.renderers.simple">
+            <block class="ItechPanel\Configurator\Block\Cart\Item\Renderer\Configurator" 
+                   name="checkout.cart.item.configurator.options.simple" 
+                   template="ItechPanel_Configurator::cart/item/configurator.phtml" 
+                   after="product.info.options">
+                <arguments>
+                    <argument name="item" xsi:type="object">\Magento\Checkout\Block\Cart\Item\Renderer::getItem</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        
+        <referenceBlock name="checkout.cart.item.renderers.configurable">
+            <block class="ItechPanel\Configurator\Block\Cart\Item\Renderer\Configurator" 
+                   name="checkout.cart.item.configurator.options.configurable" 
+                   template="ItechPanel_Configurator::cart/item/configurator.phtml" 
+                   after="product.info.options">
+                <arguments>
+                    <argument name="item" xsi:type="object">\Magento\Checkout\Block\Cart\Item\Renderer::getItem</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

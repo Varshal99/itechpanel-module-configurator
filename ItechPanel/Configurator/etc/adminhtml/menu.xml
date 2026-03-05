@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="ItechPanel_Configurator::configurator" title="Product Customizer" module="ItechPanel_Configurator" sortOrder="100" resource="ItechPanel_Configurator::configurator"/>
+        <add id="ItechPanel_Configurator::section" title="Manage Sections" module="ItechPanel_Configurator" sortOrder="10" action="configurator/section" resource="ItechPanel_Configurator::section" parent="ItechPanel_Configurator::configurator"/>
+        <add id="ItechPanel_Configurator::subsection" title="Manage Sub Sections" module="ItechPanel_Configurator" sortOrder="20" action="configurator/subsection" resource="ItechPanel_Configurator::subsection" parent="ItechPanel_Configurator::configurator"/>
+        <add id="ItechPanel_Configurator::option" title="Manage Options" module="ItechPanel_Configurator" sortOrder="30" action="configurator/option" resource="ItechPanel_Configurator::option" parent="ItechPanel_Configurator::configurator"/>
+        <add id="ItechPanel_Configurator::option_child" title="Manage Options Childs" module="ItechPanel_Configurator" sortOrder="40" action="configurator/optionchild" resource="ItechPanel_Configurator::option_child" parent="ItechPanel_Configurator::configurator"/>
+        <add id="ItechPanel_Configurator::option_group" title="Manage Option Group" module="ItechPanel_Configurator" sortOrder="50" action="configurator/optiongroup" resource="ItechPanel_Configurator::option_group" parent="ItechPanel_Configurator::configurator"/>
+        <add id="ItechPanel_Configurator::image_configurator" title="Manage Image Configurator" module="ItechPanel_Configurator" sortOrder="60" action="configurator/image" resource="ItechPanel_Configurator::image_configurator" parent="ItechPanel_Configurator::configurator"/>
+    </menu>
+</config>

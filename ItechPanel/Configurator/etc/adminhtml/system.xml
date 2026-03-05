@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © ItechPanel. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="itechpanel" translate="label" sortOrder="400">
+            <label>ItechPanel</label>
+        </tab>
+        <section id="itechpanel_configurator" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Product Configurator</label>
+            <tab>itechpanel</tab>
+            <resource>ItechPanel_Configurator::configurator</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Product Configurator</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable or disable the product configurator module globally.</comment>
+                </field>
+                <field id="display_on_product_page" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Configurator on Product Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Show configurator widget on product detail pages when enabled for product.</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="show_price_breakdown" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Price Breakdown</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Display detailed price breakdown (base price + subsections + options) to customers.</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="require_selection_validation" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Require Selection Validation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Validate that all required subsections are selected before allowing add to cart.</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="images" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Image Settings</label>
+                <field id="max_file_size" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Maximum File Size (bytes)</label>
+                    <comment>Maximum allowed file size for image uploads. Default: 2097152 (2MB).</comment>
+                    <validate>validate-number</validate>
+                </field>
+                <field id="allowed_extensions" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allowed File Extensions</label>
+                    <comment>Comma-separated list of allowed file extensions. Default: jpg,jpeg,png,gif,webp</comment>
+                </field>
+                <field id="image_quality" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Image Quality</label>
+                    <comment>Image quality for compression (1-100). Default: 85</comment>
+                    <validate>validate-number validate-number-range number-range-1-100</validate>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
